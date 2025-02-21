@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./ng-exercise-todolist  # Caminho para a pasta do front-end
+      dockerfile: Dockerfile   # Dockerfile do front-end
+    ports:
+      - "80:4200"                # Expor a porta 80
+    networks:
+      - app-network            # Rede compartilhada
+
+  backend:
+    build:
+      context: ./cs-exercise-todolist-api\cs-exercise-todolist-api   # Caminho para a pasta do back-end
+      dockerfile: Dockerfile   # Dockerfile do back-end
+    ports:
+      - "8080:8080"            # Expor a porta 8080
+      - "8081:8081"
+    # environment:
+    #   - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - app-network            # Rede compartilhada
+
+networks:
+  app-network:
+    driver: bridge             # Tipo de rede, bridge é o padrão

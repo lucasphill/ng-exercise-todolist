@@ -1,0 +1,10 @@
+<app-task-add (onAddTask)="addTask($event)"></app-task-add>
+
+@for(task of tasks; track $index){
+<app-task-item 
+    [task]="task" 
+    (onDeleteTask)="deleteTask($event)"
+    (onToggleFinish)="toggleFinish($event)"
+    >
+</app-task-item>
+}

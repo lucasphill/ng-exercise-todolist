@@ -1,0 +1,33 @@
+<div class="container mb-4">
+    @if(showAddTask){
+    <input type="button" class="btn btn-danger" (click)="toogleMenu()" value="Fechar menu" />
+    }@else {
+    <input type="button" class="btn btn-primary" (click)="toogleMenu()" value="Adicionar Tarefa" />
+    }
+</div>
+
+
+@if(showAddTask){
+<div class="floating-form" id="floatingForm" [style.display]="'block'">
+    <form (ngSubmit)="onSubmit()" class="add-form">
+        <div>
+            <label for="txtTarefa">Tarefa:</label>
+            <input type="text" name="text" class="form-control" placeholder="Add new task" id="txtTarefa"
+                [(ngModel)]="tarefa" required>
+        </div>
+        <div class="mb-4">
+            <label for="categoria">Categoria:</label>
+            <select name="categoria" id="categoria" class="form-select" [(ngModel)]="categoria">
+                <option value="" disabled selected>Selecione uma categoria</option>
+                <option value="Casa">Casa</option>
+                <option value="Trabalho">Trabalho</option>
+                <option value="Faculdade">Faculdade</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Academia">Academia</option>
+            </select>
+        </div>
+        <input type="submit" value="Salvar tarefa" class="btn btn-primary btn-block mb-4">
+    </form>
+    <input type="button" class="btn btn-danger" (click)="toogleMenu()" value="Fechar menu" />
+</div>
+}
