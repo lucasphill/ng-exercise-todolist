@@ -5,6 +5,7 @@ services:
     build:
       context: ./ng-exercise-todolist  # Caminho para a pasta do front-end
       dockerfile: Dockerfile   # Dockerfile do front-end
+    restart: always
     ports:
       - "80:4200"                # Expor a porta 80
     networks:
@@ -12,16 +13,29 @@ services:
 
   backend:
     build:
-      context: ./cs-exercise-todolist-api\cs-exercise-todolist-api   # Caminho para a pasta do back-end
-      dockerfile: Dockerfile   # Dockerfile do back-end
+      context: ./cs-exercise-todolist-api\cs-exercise-todolist-api 
+      dockerfile: Dockerfile 
+    restart: always
     ports:
-      - "8080:8080"            # Expor a porta 8080
+      - "8080:8080" 
       - "8081:8081"
     # environment:
     #   - ASPNETCORE_ENVIRONMENT=Development
     networks:
-      - app-network            # Rede compartilhada
+      - app-network
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"            
+    environment:
+      - POSTGRES_PASSWORD=postpassword
+    networks:
+      - app-network            
 
 networks:
   app-network:
-    driver: bridge             # Tipo de rede, bridge é o padrão
+    driver: bridge 

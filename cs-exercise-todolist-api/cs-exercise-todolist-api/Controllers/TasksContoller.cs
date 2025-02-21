@@ -2,7 +2,6 @@
 using cs_exercise_todolist_api.Models;
 using cs_exercise_todolist_api.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
 
 namespace cs_exercise_todolist_api.Controllers
 {

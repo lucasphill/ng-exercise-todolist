@@ -1,5 +1,6 @@
 using cs_exercise_todolist_api.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<appDbContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnectionString")));
+//builder.Services.AddDbContext<appDbContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnectionString")));
+builder.Services.AddDbContext<appDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PsqlConnectionString")));
 
 builder.Services.AddScoped<appDbContext>();
 
