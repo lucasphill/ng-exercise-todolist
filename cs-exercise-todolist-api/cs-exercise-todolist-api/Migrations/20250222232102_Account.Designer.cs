@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cs_exercise_todolist_api.Data;
 
@@ -10,9 +11,11 @@ using cs_exercise_todolist_api.Data;
 namespace cs_exercise_todolist_api.Migrations
 {
     [DbContext(typeof(appDbContext))]
-    partial class appDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250222232102_Account")]
+    partial class Account
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
@@ -215,12 +218,6 @@ namespace cs_exercise_todolist_api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("AccountID")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("AccountModelId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Categoria")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -233,8 +230,6 @@ namespace cs_exercise_todolist_api.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountModelId");
 
                     b.ToTable("Tasks");
                 });
@@ -288,18 +283,6 @@ namespace cs_exercise_todolist_api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("cs_exercise_todolist_api.Models.TaskModel", b =>
-                {
-                    b.HasOne("cs_exercise_todolist_api.Models.AccountModel", null)
-                        .WithMany("Tasks")
-                        .HasForeignKey("AccountModelId");
-                });
-
-            modelBuilder.Entity("cs_exercise_todolist_api.Models.AccountModel", b =>
-                {
-                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

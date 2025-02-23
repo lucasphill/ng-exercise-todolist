@@ -8,10 +8,13 @@ namespace cs_exercise_todolist_api.Models
         public Guid Id { get; set; }
 
         [Required]
-        public string Tarefa { get; set; }
+        public string Tarefa { get; set; } // ex: Comprar maçã
 
         [Required]
-        public string Categoria { get; set; }
+        public string Categoria { get; set; } // ex: Casa
         public bool Concluido { get; set; } = false;
+
+        [Required]
+        public Guid AccountID { get; set; }
     }
 }

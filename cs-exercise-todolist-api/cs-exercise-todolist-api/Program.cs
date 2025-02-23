@@ -1,4 +1,6 @@
 using cs_exercise_todolist_api.Data;
+using cs_exercise_todolist_api.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -11,16 +13,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddDbContext<appDbContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnectionString")));
-builder.Services.AddDbContext<appDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PsqlConnectionString")));
+// Add database, SQLite or Postgres
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnectionString")));
+//builder.Services.AddDbContext<appDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PsqlConnectionString")));
 
-builder.Services.AddScoped<appDbContext>();
+// Add identity service
+builder.Services.AddIdentity<AccountModel, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", builder =>
     {
-        builder.WithOrigins("*")  // Defina a origem permitida
+        builder.WithOrigins("*")  // Defina a origem permitida (* para todos)
                .AllowAnyHeader()
                .AllowAnyMethod();
     });
@@ -37,7 +41,7 @@ if (app.Environment.IsDevelopment())
 
 { // Garante que o banco de dados existe antes de terminar a inicialização
     var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetService<appDbContext>();
+    var dbContext = scope.ServiceProvider.GetService<AppDbContext>();
     dbContext!.Database.EnsureCreated();
 }
 

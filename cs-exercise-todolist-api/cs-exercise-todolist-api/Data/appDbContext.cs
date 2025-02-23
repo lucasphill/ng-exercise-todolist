@@ -1,11 +1,12 @@
 ﻿using cs_exercise_todolist_api.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace cs_exercise_todolist_api.Data
 {
-    public class appDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AccountModel>
     {
-        public appDbContext(DbContextOptions<appDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
